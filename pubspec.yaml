@@ -42,7 +42,7 @@ dependencies:
   google_fonts:
   flutter_screenutil: ^5.9.3
   get: ^4.6.6
-
+  syncfusion_flutter_pdfviewer:
 dev_dependencies:
   flutter_test:
     sdk: flutter

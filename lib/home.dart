@@ -171,6 +171,12 @@ class _PDFReaderScreenState extends State<PDFReaderScreen> {
               tooltip: 'Select Chapter',
             ),
           ),
+          IconButton(
+            icon: const Icon(Icons.nightlight_round),
+            onPressed: toggleNightMode,
+            tooltip: 'Toggle Night Mode',
+            color: isNightMode ? Colors.yellow : Colors.white,
+          ),
 
         ],
       ),
@@ -224,47 +230,16 @@ class _PDFReaderScreenState extends State<PDFReaderScreen> {
                     // Horizontal Progress Indicator
                     LinearProgressIndicator(
                       value: currentPage / totalPages,
+                      borderRadius: BorderRadius.circular(50),
+                      minHeight: 8,
                       backgroundColor: Colors.grey.shade300,
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        Colors.blue,
+                        AppColors.blueColor,
                       ),
                     ),
                   ],
                 );
               },
-            ),
-          ),
-
-          // Zoom and Night Mode Buttons
-          Container(
-            width:0.6.sw,
-            decoration: BoxDecoration(
-              color: AppColors.blueColor,
-              borderRadius: BorderRadius.circular(50)
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.zoom_out, color: Colors.white,),
-                    onPressed: zoomOut,
-                    tooltip: 'Zoom Out',
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.nightlight_round),
-                    onPressed: toggleNightMode,
-                    tooltip: 'Toggle Night Mode',
-                    color: isNightMode ? Colors.yellow : Colors.white,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.zoom_in, color: Colors.white,),
-                    onPressed: zoomIn,
-                    tooltip: 'Zoom In',
-                  ),
-                ],
-              ),
             ),
           ),
           SizedBox(height: 20.h,)
