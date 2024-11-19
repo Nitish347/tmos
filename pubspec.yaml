@@ -39,6 +39,9 @@ dependencies:
   path_provider:
   page_flip: ^0.2.3
   pdfx:
+  google_fonts:
+  flutter_screenutil: ^5.9.3
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:
