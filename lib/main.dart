@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import 'home.dart';
 
@@ -20,14 +21,14 @@ class MyApp extends StatelessWidget {
     splitScreenMode: true,
     // Use builder only if you need to use library outside ScreenUtilInit context
     builder: (_, child) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:PDFReaderScreen(),
+      home: PartSelectionScreen(),
     );});
   }
 }
