@@ -77,7 +77,7 @@ class BookDrawer extends StatelessWidget {
               label: 'Preface',
               onTap: () {
                 controller.part.value = 2;
-                Get.to(()=>PDFReaderScreen(pdfPath: preface,));
+                Get.to(()=>PDFReaderScreen(pdfPath: preface, title: "Preface", showChapters: false,));
               },
             ),
             _buildDrawerItem(
@@ -85,7 +85,7 @@ class BookDrawer extends StatelessWidget {
               icon: Icons.bookmark,
               label: 'Acknowledgement',
               onTap: () {  controller.part.value = 2;
-                Get.to(()=>PDFReaderScreen(pdfPath: acknowledgement,));
+                Get.to(()=>PDFReaderScreen(pdfPath: acknowledgement, title: "Acknowledgement", showChapters: false,));
               },
             ),
             _buildDrawerItem(
@@ -93,7 +93,7 @@ class BookDrawer extends StatelessWidget {
               icon: Icons.person,
               label: 'About the Author',
               onTap: () {  controller.part.value = 2;
-                Get.to(()=>PDFReaderScreen(pdfPath: about,));
+                Get.to(()=>PDFReaderScreen(pdfPath: about, title: "About the Author", showChapters: false,));
               },
             ),
 

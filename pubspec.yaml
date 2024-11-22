@@ -23,6 +23,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   get: ^4.6.6
   animations:
+  video_player: ^2.9.2
   syncfusion_flutter_pdfviewer:
 dev_dependencies:
   flutter_test:
@@ -40,6 +41,7 @@ flutter:
   assets:
     - assets/
     - assets/preface.pdf
+    - assets/final cover page.PNG
 
 
 

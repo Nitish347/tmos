@@ -13,7 +13,9 @@ import 'package:tmos/utils.dart';
 
 class PDFReaderScreen extends StatefulWidget {
   String pdfPath;
-  PDFReaderScreen({required this.pdfPath});
+  bool showChapters;
+  String title;
+  PDFReaderScreen({required this.pdfPath, required this.title, required this.showChapters});
   @override
   _PDFReaderScreenState createState() => _PDFReaderScreenState();
 }
@@ -109,7 +111,7 @@ class _PDFReaderScreenState extends State<PDFReaderScreen> {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: controller.part.value == 0 ? chapter1.length : chapter2.length,
+                  itemCount: controller.bookPart.length,
                   itemBuilder: (context, index) {
                     return ListTile(
                       leading: Container(
@@ -142,17 +144,17 @@ class _PDFReaderScreenState extends State<PDFReaderScreen> {
                         size: 18,
                       ),
                       onTap: () {
-
+                        Navigator.pop(context);
                         Navigator.pop(context);
 
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => PDFReaderScreen(
-                                    pdfPath: (controller.part.value == 0
-                                            ? chapter1[index]["path"]
-                                            : chapter2[index]["path"]) ??
-                                        "")));        Navigator.pop(context);
+                                      pdfPath: (controller.bookPart[index]['path'] ?? ""),
+                                      title: "Chapter: ${index + 1}",
+                                      showChapters: true,
+                                    )));
                       },
                     );
                   },
@@ -170,30 +172,34 @@ class _PDFReaderScreenState extends State<PDFReaderScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
-          "THE MELANGE OF SUCCESS",
+          widget.title,
           style: GoogleFonts.poppins(
               color: isNightMode ? Colors.white : Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 20.sp),
         ),
+        centerTitle: true,
         backgroundColor: isNightMode ? Colors.grey : AppColors.blueColor,
         elevation: 4, // Subtle shadow for the AppBar
         shadowColor: Colors.blue.shade100,
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: IconButton(
-              icon: const Icon(
-                Icons.menu_book,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                selectChapter(context, pdfController);
-              },
-              tooltip: 'Select Chapter',
-            ),
-          ),
+          widget.showChapters
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.menu_book,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      selectChapter(context, pdfController);
+                    },
+                    tooltip: 'Select Chapter',
+                  ),
+                )
+              : const SizedBox(),
           IconButton(
             icon: Icon(isNightMode ? Icons.sunny : Icons.nightlight_round),
             onPressed: toggleNightMode,
@@ -236,13 +242,44 @@ class _PDFReaderScreenState extends State<PDFReaderScreen> {
                         final totalPages = pdfController.pagesCount ?? 1;
                         return Column(
                           children: [
-                            Text(
-                              'Chapter: 1',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: isNightMode ? Colors.white : Colors.black,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 80,
+                                  child: TextButton(
+                                      onPressed: () {
+                                        pdfController.previousPage(
+                                            duration: const Duration(milliseconds: 500),
+                                            curve: Curves.linear);
+                                      },
+                                      child: const Text(
+                                        "< Prev",
+                                        style: TextStyle(color: AppColors.blueColor),
+                                      )),
+                                ),
+                                Text(
+                                  "THE MELANGE OF SUCCESS",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: isNightMode ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 80,
+                                  child: TextButton(
+                                      onPressed: () {
+                                        pdfController.nextPage(
+                                            duration: const Duration(milliseconds: 500),
+                                            curve: Curves.linear);
+                                      },
+                                      child: const Text(
+                                        "Next >",
+                                        style: TextStyle(color: AppColors.blueColor),
+                                      )),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 4),
                             Text(

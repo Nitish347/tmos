@@ -61,7 +61,7 @@ final controller = Get.put(Controller());
                 ),
                 child: ListTile(
                   onTap: (){
-                    Get.to(()=>PDFReaderScreen(pdfPath: about,));
+                    Get.to(()=>PDFReaderScreen(pdfPath: about, title: "About the Author",showChapters: false,));
                   },
                   leading: const CircleAvatar(
                     radius: 25,
@@ -106,7 +106,7 @@ final controller = Get.put(Controller());
                         );
                       },
                       openBuilder: (context, action) {
-                        controller.part.value = index;
+                        controller.onSelectPart(index);
                         return ChapterScreen(
                           part: parts[index]['title']!,
                         );

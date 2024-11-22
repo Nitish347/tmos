@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,7 @@ class ChapterDetailsPopup extends StatelessWidget {
   final String imagePath;
   final String description;
   final String pdfPath;
+  final int index;
 
   const ChapterDetailsPopup({
     super.key,
@@ -18,6 +21,7 @@ class ChapterDetailsPopup extends StatelessWidget {
     required this.imagePath,
     required this.description,
     required this.pdfPath,
+    required this.index
   });
 
   @override
@@ -38,7 +42,7 @@ class ChapterDetailsPopup extends StatelessWidget {
           ),
           SizedBox(height: 20.h),
           Text(
-            "Chapter: 1",
+            "Chapter: ${index +1}",
             style: TextStyle(
               fontSize: 25.sp,
               fontWeight: FontWeight.bold,
@@ -73,7 +77,8 @@ class ChapterDetailsPopup extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
-                Get.to(()=>PDFReaderScreen(pdfPath: pdfPath,));
+                log(pdfPath.toString());
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>PDFReaderScreen(pdfPath: pdfPath, title: "Chapter: ${index+1}", showChapters: true,)));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.blueColor,

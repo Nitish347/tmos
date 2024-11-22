@@ -15,24 +15,24 @@ class ChapterScreen extends StatelessWidget {
   final String part;
 
   ChapterScreen({super.key, required this.part});
-  List<Map<String, String>> allChapters = [];
+  // List<Map<String, String>> allChapters = [];
   final controller = Get.put(Controller());
   @override
   Widget build(BuildContext context) {
-    if(controller.part.value ==0){
-      allChapters = chapter1;
-    }else{
-      allChapters = chapter2;
-    }
-    final chapters = List.generate(
-      allChapters.length,
-      (index) => {
-        'title': allChapters[index]["name"],
-        'image': allChapters[index]["img"],
-        'description': allChapters[index]["text"],
-        'path': allChapters[index]["path"]
-      },
-    );
+    // if(controller.part.value ==0){
+    //   allChapters = chapter1;
+    // }else{
+    //   allChapters = chapter2;
+    // }
+    // final chapters = List.generate(
+    //   allChapters.length,
+    //   (index) => {
+    //     'title': allChapters[index]["name"],
+    //     'image': allChapters[index]["img"],
+    //     'description': allChapters[index]["text"],
+    //     'path': allChapters[index]["path"]
+    //   },
+    // );
 
     return Scaffold(
       appBar: AppBar(
@@ -51,7 +51,7 @@ class ChapterScreen extends StatelessWidget {
           mainAxisSpacing: 16,
           childAspectRatio: 1/1.4
         ),
-        itemCount: chapters.length,
+        itemCount: controller.bookPart.length,
         itemBuilder: (context, index) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(10),
@@ -72,16 +72,16 @@ class ChapterScreen extends StatelessWidget {
                         ),
                       ),
                       builder: (context) => ChapterDetailsPopup(
-                        title: chapters[index]['title'] ?? "",
-                        imagePath: chapters[index]['image'] ?? "",
-                        description: chapters[index]['description'] ?? "",
-                        pdfPath: chapters[index]["path"] ?? "",
+                        title: controller.bookPart[index]['name'] ?? "",
+                        imagePath:  controller.bookPart[index]['img'] ?? "",
+                        description:  controller.bookPart[index]['text'] ?? "",
+                        pdfPath:  controller.bookPart[index]["path"] ?? "", index: index,
                       ),
                     );
                   },
                   child: GridCard(
-                    title: chapters[index]['title']!,
-                    imagePath: chapters[index]['image']!, index: index,
+                    title:  controller.bookPart[index]['name']!,
+                    imagePath:  controller.bookPart[index]['img']!, index: index,
                   ),
                 );
               },
