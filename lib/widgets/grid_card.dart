@@ -29,8 +29,8 @@ class GridCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
-                // imagePath,
-                "assets/bg.webp",
+                imagePath,
+                // "assets/bg.webp",
                 fit: BoxFit.fitWidth,
               ),
             ),

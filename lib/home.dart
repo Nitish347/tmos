@@ -8,11 +8,8 @@ import 'package:tmos/colors.dart';
 import 'package:tmos/pdf_viewer.dart';
 import 'package:tmos/utils.dart';
 import 'package:tmos/widgets/drawer.dart';
-import 'package:tmos/widgets/grid_card.dart';
 import 'package:tmos/widgets/home_card.dart';
-
 import 'chapter_screen.dart';
-import 'chapters_details.dart';
 import 'controller.dart';
 
 class PartSelectionScreen extends StatelessWidget {
@@ -21,8 +18,8 @@ final controller = Get.put(Controller());
   @override
   Widget build(BuildContext context) {
     final parts = [
-      {'title': 'Part 1', 'image': 'assets/part1.png'},
-      {'title': 'Part 2', 'image': 'assets/part2.png'},
+      {'title': 'Part 1', 'image': 'assets/book.webp'},
+      {'title': 'Part 2', 'image': 'assets/book.webp'},
     ];
 
     return Scaffold(
@@ -44,7 +41,7 @@ final controller = Get.put(Controller());
         height: 1.sh,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/bg.jpg"),
+            image: AssetImage("assets/bg.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -65,6 +62,7 @@ final controller = Get.put(Controller());
                   },
                   leading: const CircleAvatar(
                     radius: 25,
+                    backgroundImage: AssetImage("assets/image.webp"),
                   ),
                   title: Text(
                     "Praveen Soni",
@@ -75,10 +73,10 @@ final controller = Get.put(Controller());
                     ),
                   ),
                   subtitle: Text(
-                    "More about Praveen Soni",
+                    "Tap to know more >",
                     style: TextStyle(
                       color: AppColors.blueColor.withOpacity(0.7),
-                      fontSize: 15.sp,
+                      fontSize: 13.sp,
                     ),
                   ),
                 ),

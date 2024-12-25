@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
     // Use builder only if you need to use library outside ScreenUtilInit context
     builder: (_, child) {
     return GetMaterialApp(
+debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
 

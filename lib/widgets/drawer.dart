@@ -4,11 +4,79 @@ import 'package:get/get.dart';
 import 'package:tmos/colors.dart';
 import 'package:tmos/pdf_viewer.dart';
 import 'package:tmos/utils.dart';
+import 'package:tmos/web_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../chapter_screen.dart';
 import '../controller.dart';
 
 class BookDrawer extends StatelessWidget {
+
+
+  Future<void> launchGmail({
+    required String recipient,
+    String? subject,
+    String? body,
+  }) async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: recipient,
+      queryParameters: {
+        if (subject != null) 'subject': subject,
+        if (body != null) 'body': body,
+      },
+    );
+
+    print(emailUri.toString()); // Debugging: Verify the email URI format
+
+    if (await canLaunchUrl(emailUri)) {
+      await launchUrl(
+        emailUri,
+        mode: LaunchMode.externalApplication, // Ensure external app opens
+      );
+    } else {
+      throw 'Could not launch $emailUri';
+    }
+  }
+
+
+  Future<void> openGmailApp() async {
+    const String gmailPackage = "com.google.android.gm";
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: 'praveensonifr@gmail.com',
+      query: '',
+    );
+
+    try {
+      if (await canLaunchUrl(emailUri)) {
+        // Check if the device has the Gmail app
+        await launchUrl(
+          emailUri,
+          mode: LaunchMode.externalApplication,
+        );
+      } else {
+        // If not, fallback to opening Gmail by package name (Android-only)
+        Uri gmailIntent = Uri(
+          scheme: 'intent',
+          path: 'mailto',
+          queryParameters: {
+            'package': gmailPackage,
+          },
+        );
+
+        if (await canLaunchUrl(gmailIntent)) {
+          await launchUrl(gmailIntent, mode: LaunchMode.externalApplication);
+        } else {
+          throw 'Gmail app is not installed or cannot be opened';
+        }
+      }
+    } catch (e) {
+      print('Error opening Gmail: $e');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(Controller());
@@ -98,17 +166,13 @@ class BookDrawer extends StatelessWidget {
             ),
 
             Divider(color: AppColors.blueColor,),
-            _buildDrawerItem(
-              context,
-              icon: Icons.copy,
-              label: 'Get Copy',
-            ),
+
             _buildDrawerItem(
               context,
               icon: Icons.local_shipping,
               label: 'Get Physical Copy',
               onTap: () {
-                // Navigate to Get Physical Copy page or functionality
+                Get.to(()=>MyWebsite(url: "http://praveen.dotsforall.com/", title: "Get Physical Copy"));
               },
             ),
             _buildDrawerItem(
@@ -117,39 +181,44 @@ class BookDrawer extends StatelessWidget {
               label: 'Get on Kindle',
               onTap: () {
                 // Navigate to Get on Kindle page or functionality
+                Get.to(()=>MyWebsite(url: "https://www.amazon.in/MELANGE-SUCCESS-defeat-till-accepts-ebook/dp/B07Y7K51NQ/ref=mp_s_a_1_1?dchild=1&keywords=the+melange+of+success&qid=1595087310&sr=8-1", title: "Get Copy"));
+
               },
             ),
-            Divider(color: AppColors.blueColor,),
-            _buildDrawerItem(
-              context,
-              icon: Icons.share,
-              label: 'Share',
-              onTap: () {
-                // Share functionality
-              },
-            ),
+            // Divider(color: AppColors.blueColor,),
+            // _buildDrawerItem(
+            //   context,
+            //   icon: Icons.share,
+            //   label: 'Share',
+            //   onTap: () {
+            //     // Share functionality
+            //   },
+            // ),
             _buildDrawerItem(
               context,
               icon: Icons.video_library,
               label: 'Official Launch Video',
               onTap: () {
-                // Play the launch video
+               Get.to(()=>MyWebsite(url: "https://youtu.be/KSm-A--SJr8?si=89_SDtg-hsszjRiq", title: "Official Launch Video"));
               },
             ),
-            _buildDrawerItem(
-              context,
-              icon: Icons.star_rate,
-              label: 'Rate Us',
-              onTap: () {
-                // Redirect to rating functionality
-              },
-            ),
+            // _buildDrawerItem(
+            //   context,
+            //   icon: Icons.star_rate,
+            //   label: 'Rate Us',
+            //   onTap: () {
+            //     // Redirect to rating functionality
+            //   },
+            // ),
             _buildDrawerItem(
               context,
               icon: Icons.mail,
               label: 'Mail Us',
-              onTap: () {
+              onTap: ()async  {
                 // Open mail client
+                openGmailApp();
+
+
               },
             ),
           ],

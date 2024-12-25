@@ -34,8 +34,8 @@ class ChapterDetailsPopup extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.asset(
-              // imagePath,
-              "assets/bg.webp",
+              imagePath,
+              // "assets/bg.webp",
               height: 200.h,
               fit: BoxFit.cover,
             ),
